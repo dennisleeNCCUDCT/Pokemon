@@ -14,7 +14,7 @@
         </div>
         <div class="card-details">
           <div class="card-holder-col">
-            <nuxt-link :to="pokemon.url">Check out the {{ pokemon.name }}</nuxt-link>
+            <nuxt-link :to="pokemon.url">Check out the {{ pokemon.url }}</nuxt-link>
             <span class="card-holder-name">ALI ABDI</span>
           </div>
           <div class="card-date-col">
