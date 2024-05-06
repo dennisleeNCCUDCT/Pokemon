@@ -14,7 +14,7 @@
         </div>
         <div class="card-details">
           <div class="card-holder-col">
-            <nuxt-link :to="pokemon.url">Check out the {{ pokemon.url }}</nuxt-link>
+            <button @click="fetchSinglePokemonURL">Check out the <span>{{ pokemon.name }}</span></button>
             <span class="card-holder-name">ALI ABDI</span>
           </div>
           <div class="card-date-col">
@@ -24,19 +24,29 @@
         </div>
       </div>
     </div>
-    </template>
-    
-    <script>
-    export default {
-      props: {
-        pokemon: {
-          type: Object,
-          required: true
+  </template>
+  
+  <script>
+  export default {
+    props: {
+      pokemon: {
+        type: Object,
+        required: true
+      }
+    },
+    methods: {
+      async fetchSinglePokemonURL() {
+        try {
+          const response = await fetch(this.pokemon.url); // Accessing pokemon.url using 'this'
+          const data = await response.json();
+          // Handle the response here if needed
+        } catch (error) {
+          console.error('Failed to fetch Pokémon:', error);
         }
       }
     }
-    </script>
-
+  }
+  </script>
 <style>
 .card-container,
 .card-box,

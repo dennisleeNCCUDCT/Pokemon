@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div v-for="pokemon in allPokemon" :key="pokemon.name">
-      <PokemonCard :pokemon="pokemon" />
+    <div v-for="pokemon in allPokemon" :key="`${pokemon.name}-${pokemon.url}`">
+      <PokemonCard :pokemon="pokemon" @pokemon-details="updatePokemonDetails" />
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     }
   },
   mounted() {
-   this.fetchAllPokemon();
+    this.fetchAllPokemon();
   },
   methods: {
     async fetchAllPokemon() {
@@ -30,6 +30,10 @@ export default {
       } catch (error) {
         console.error('Failed to fetch Pokémon:', error);
       }
+    },
+    updatePokemonDetails(data) {
+      // Update allPokemon with the details fetched
+      this.allPokemon = data;
     }
   }
 }
