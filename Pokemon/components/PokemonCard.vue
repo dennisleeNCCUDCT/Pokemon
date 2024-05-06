@@ -1,14 +1,7 @@
 <template>
     <div class="card-container">
       <div class="card-box">
-        <div class="card-head">
-          <div class="card-chip">
-            <!-- Optional content like an image -->
-          </div>
-          <div class="card-logo">
-            <!-- Optional content like a logo -->
-          </div>
-        </div>
+        <!-- Card content -->
         <div class="card-number-row">
           <p>Pokemon Name: <span>{{ pokemon.name }}</span></p>
         </div>
@@ -23,10 +16,14 @@
           </div>
         </div>
       </div>
+      <DitalCard v-if="openDetailCard" :pokemonData="fetchedPokemonData" />
     </div>
   </template>
   
   <script>
+  import { ref } from 'vue';
+  import DitalCard from './DitalCard.vue';
+  
   export default {
     props: {
       pokemon: {
@@ -34,19 +31,34 @@
         required: true
       }
     },
-    methods: {
-      async fetchSinglePokemonURL() {
+    components: {
+      DitalCard
+    },
+    setup(props) {
+      // Define reactive references for fetched data and detail card visibility
+      const fetchedPokemonData = ref(null);
+      const openDetailCard = ref(false);
+  
+      const fetchSinglePokemonURL = async () => {
         try {
-          const response = await fetch(this.pokemon.url); // Accessing pokemon.url using 'this'
+          const response = await fetch(props.pokemon.url);
           const data = await response.json();
-          // Handle the response here if needed
+          fetchedPokemonData.value = data;
+          openDetailCard.value = true;
         } catch (error) {
           console.error('Failed to fetch Pokémon:', error);
         }
-      }
+      };
+  
+      return {
+        fetchedPokemonData,
+        openDetailCard,
+        fetchSinglePokemonURL
+      };
     }
-  }
+  };
   </script>
+  
 <style>
 .card-container,
 .card-box,
